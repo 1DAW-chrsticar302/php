@@ -12,14 +12,21 @@ function dump($var){
 }
 
 //Función lógica presentación
-function getTableroMarkup($tableroData){
+function getTableroMarkup($tableroData,$personaje){
     $output='';
+    $x = 0;
+    $y = 0;
 
     foreach($tableroData as $fila => $datosFila) {
         foreach($datosFila as $celda => $datosCelda) {
-            $output.='<div class="tile '. $datosCelda .'"></div>';
+            if($personaje["top"] == $y && $personaje["left"] == $x) {
+                $output .= $personaje["imagen"];
+            }else{
+                $output.='<div class="tile '. $datosCelda .'"></div>';
+            }
+            $x++;
         }
-
+        $y++;
     }
 
     return $output;
@@ -27,17 +34,32 @@ function getTableroMarkup($tableroData){
 
 
 //Lógica de negocio
-$archivoCSV=fopen("tabla.csv","r");
 
-$tablero = [];
-while(($linea = fgetcsv($archivoCSV)) !== false) {
-    $tablero[] = $linea;
+
+$personaje=[
+    "imagen" => '<img src=sonic.png>',
+    "top" => rand(0,12),
+    "left" =>rand(0,12)
+];
+
+
+$tablero = cargarCSV("tabla.csv");
+
+function cargarCSV($archivo) {
+    $archivoCSV=fopen($archivo,"r");
+
+    while(($linea = fgetcsv($archivoCSV)) !== false) {
+        $tablero[] = $linea;
+    }
+
+    fclose($archivoCSV);
+
+
+return $tablero;
 }
 
-fclose($archivoCSV);
-
 //Lógica de presentación
-$tableroMarkup = getTableroMArkup($tablero);
+$tableroMarkup = getTableroMArkup($tablero,$personaje);
 
 
 ?>
@@ -57,6 +79,9 @@ $tableroMarkup = getTableroMArkup($tablero);
             border-radius: 5px;
             border: solid 2px grey;
             box-shadow: grey;
+            display:grid;
+            grid-template-columns: repeat(12,1fr);
+            grid-template-rows: repeat(12,1fr);
         }
         .tile{
             width: 50px;
@@ -65,18 +90,29 @@ $tableroMarkup = getTableroMArkup($tablero);
             margin:0;
             padding:0;
             border-width:0;
+            background-size: 209px;
+            background-image: url("../imgTabla/464.jpg")
         }
         .fuego{
             background-color: red;
+            background-position: 106px -52px;
+
         }
         .tierra{
             background-color:brown;
+            background-position: 56px 0px;
         }
         .agua{
             background-color:blue;
+            background-position: 156px 0px;
         }
         .hierba{
             background-color:green;
+            background-position: 0px 0px;
+        }
+        .personaje{
+            background-image: url("../imgTabla/sonic.png");
+
         }
     </style>
 </head>
