@@ -10,6 +10,6 @@
     <a href="Ejemplos/template.php">Template</a><br>
     <a href="pruebas.php">Pruebas</a><br>
     <a href="EjercicioCSV/tablero.php">CSV</a><br>
-    <a href=""></a><br>
+    <a href="EjercicioPersonaje/tablero.php">PersonajeGetPost</a><br>
 </body>
 </html>
