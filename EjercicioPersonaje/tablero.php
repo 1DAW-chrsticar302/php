@@ -17,6 +17,12 @@ function getTableroMarkup($tableroData,$personaje){
     $x = 0;
     $y = 0;
 
+
+    if($personaje[0]==null || $personaje[1]==null || $personaje[0]>11 || $personaje[0]<0 || $personaje[1]>11 || $personaje[1]<0) {
+        $personaje[0]=0;
+        $personaje[1]=0;
+    }
+
     foreach($tableroData as $fila => $datosFila) {
         foreach($datosFila as $celda => $datosCelda) {
             if($personaje[0] == $y && $personaje[1] == $x) {
@@ -37,6 +43,8 @@ function getTableroMarkup($tableroData,$personaje){
 //Lógica de negocio
 
 function getPersonaje() {
+    $fila=null;
+    $columna=null;
     $fila=$_GET['fila'];
     $columna=$_GET['columna'];
     $personaje="personaje/sonic.png";
