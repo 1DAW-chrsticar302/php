@@ -1,0 +1,48 @@
+.contenedorTablero{
+    width:604px;
+    height: 604px;
+    border-radius: 5px;
+    border: solid 2px grey;
+    box-shadow: grey;
+    display:grid;
+    grid-template-columns: repeat(12,1fr);
+    grid-template-rows: repeat(12,1fr);
+}
+.tile{
+    width: 50px;
+    height: 50px;
+    float:left;
+    margin:0;
+    padding:0;
+    border-width:0;
+    background-size: 209px;
+    background-image: url("../imgTabla/464.jpg")
+}
+.fuego{
+    background-color: red;
+    background-position: 103px -52px;
+
+}
+.tierra{
+    background-color:brown;
+    background-position: 50px 0px;
+}
+.agua{
+    background-color:blue;
+    background-position: 155px 0px;
+}
+.hierba{
+    background-color:green;
+    background-position: -2px 0px;
+}
+.personaje{
+    background-image: url("../imgTabla/sonic.png");
+
+}
+.arrows {
+    width: 500px;
+    height: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+}

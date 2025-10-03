@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <title>Indice</title>
 </head>
 <body>
-    <a href="tableroPropio.php">Mi Tablero</a><br>
-    <a href="Ejemplos/template.php">Template</a><br>
-    <a href="pruebas.php">Pruebas</a><br>
-    <a href="EjercicioCSV/tablero.php">CSV</a><br>
-    <a href="EjercicioPersonaje/tablero.php">PersonajeGetPost</a><br>
+    <ul>
+        <li>Ejercicio Personaje: <a href="src/EjercicioPersonaje/tablero.php">Link</a></li>
+    </ul>
 </body>
 </html>
