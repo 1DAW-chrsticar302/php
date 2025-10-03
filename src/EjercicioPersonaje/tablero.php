@@ -34,17 +34,32 @@ function getArrowsMarkup ($arrowsData,$personaje) {
     }
     foreach($arrowsData as $array => $datosArray) {
         foreach($datosArray as $tecla => $datosTecla) {
-            if($datosTecla == "izquierda") {
+            if($datosTecla == "izquierda" && $col != 0) {
                 $output.='<a href="http://localhost/src/EjercicioPersonaje/tablero.php?fila='.$personaje[0].'&columna='.$prevC.'">'.$datosTecla.'</a>';
             }
-            if($datosTecla == "arriba") {
+            else {
+                $output.='';
+            }
+
+            if($datosTecla == "arriba" && $fila != 0) {
                 $output.='<a href="http://localhost/src/EjercicioPersonaje/tablero.php?fila='.$prevF.'&columna='.$personaje[1].'">'.$datosTecla.'</a>';
             }
-            if($datosTecla == "abajo") {
+            else {
+                $output.='';
+            }
+
+            if($datosTecla == "abajo" && $fila != 11) {
                 $output.='<a href="http://localhost/src/EjercicioPersonaje/tablero.php?fila='.$nextF.'&columna='.$personaje[1].'">'.$datosTecla.'</a>';
             }
-            if($datosTecla == "derecha") {
+            else {
+                $output.='';
+            }
+
+            if($datosTecla == "derecha" && $col != 11) {
                 $output.='<a href="http://localhost/src/EjercicioPersonaje/tablero.php?fila='.$personaje[0].'&columna='.$nextC.'">'.$datosTecla.'</a>';
+            }
+            else {
+                $output.='';
             }
             
         }
