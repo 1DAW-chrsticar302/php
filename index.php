@@ -1,3 +1,9 @@
+<?php
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,5 +16,12 @@
     <ul>
         <li>Ejercicio Personaje: <a href="src/EjercicioPersonaje/tablero.php">Link</a></li>
     </ul>
+
+    <h1>Ejemplo formulario</h1>
+
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
+        <input type="text" name="mensaje">
+        <input type="submit" value="Enviar">
+    </form>
 </body>
 </html>

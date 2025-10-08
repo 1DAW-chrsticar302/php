@@ -14,9 +14,11 @@ function dump($var){
 //Función lógica presentación
 function getArrowsMarkup ($arrowsData,$personaje) {
     $output='';
-    $fila = $personaje[0];
-    $col = $personaje[1];
-    $nextF = $fila + 1;
+    if(isset($personaje)) {
+        $fila = $personaje[0];
+        $col = $personaje[1];
+
+        $nextF = $fila + 1;
     $nextC = $col + 1;
     $prevF = $fila-1;
     $prevC = $col-1;
@@ -34,36 +36,31 @@ function getArrowsMarkup ($arrowsData,$personaje) {
     }
     foreach($arrowsData as $array => $datosArray) {
         foreach($datosArray as $tecla => $datosTecla) {
-            if($datosTecla == "izquierda" && $col != 0) {
-                $output.='<a href="http://localhost/src/EjercicioPersonaje/tablero.php?fila='.$personaje[0].'&columna='.$prevC.'">'.$datosTecla.'</a>';
+            if($datosTecla == "n") {
+                $output.=".";
             }
-            else {
-                $output.='';
+            if($datosTecla == "izquierda" && $col != 0) {
+                $output.='<a href="http://localhost/src/EjercicioPersonaje/tablero.php?fila='.$personaje[0].'&columna='.$prevC.'"><button>'.$datosTecla.'</button></a>';
             }
 
             if($datosTecla == "arriba" && $fila != 0) {
-                $output.='<a href="http://localhost/src/EjercicioPersonaje/tablero.php?fila='.$prevF.'&columna='.$personaje[1].'">'.$datosTecla.'</a>';
+                $output.='<a href="http://localhost/src/EjercicioPersonaje/tablero.php?fila='.$prevF.'&columna='.$personaje[1].'"><button>'.$datosTecla.'</button></a>';
             }
-            else {
-                $output.='';
-            }
-
             if($datosTecla == "abajo" && $fila != 11) {
-                $output.='<a href="http://localhost/src/EjercicioPersonaje/tablero.php?fila='.$nextF.'&columna='.$personaje[1].'">'.$datosTecla.'</a>';
-            }
-            else {
-                $output.='';
+                $output.='<a href="http://localhost/src/EjercicioPersonaje/tablero.php?fila='.$nextF.'&columna='.$personaje[1].'"><button>'.$datosTecla.'</button></a>';
             }
 
             if($datosTecla == "derecha" && $col != 11) {
-                $output.='<a href="http://localhost/src/EjercicioPersonaje/tablero.php?fila='.$personaje[0].'&columna='.$nextC.'">'.$datosTecla.'</a>';
-            }
-            else {
-                $output.='';
+                $output.='<a href="http://localhost/src/EjercicioPersonaje/tablero.php?fila='.$personaje[0].'&columna='.$nextC.'"><button>'.$datosTecla.'</button></a>';
             }
             
         }
     }
+    }else {
+        $fila = 0;
+        $col = 0;
+    }
+    
     return $output;
 }
 
@@ -72,8 +69,6 @@ function getTableroMarkup($tableroData,$personaje){
     $output='';
     $x = 0;
     $y = 0;
-
-
     
 
     foreach($tableroData as $fila => $datosFila) {
@@ -94,8 +89,9 @@ function getTableroMarkup($tableroData,$personaje){
 
 function getMensajesMarkup($arrayMensajes) {
     $output='';
-    if($arrayMensajes != null){
-        foreach($mensajes as $arrayMensajes) {
+
+    if(isset($arrayMensajes)){
+        foreach($arrayMensajes as $mensajes) {
             $output.='<p>'. $mensajes . '</p>';
         }
     }
@@ -117,7 +113,13 @@ function getPersonaje() {
         ) : null;   
 }
 
+function procesaredirect() {
+    if(!isset($_GET['fila']) && !isset($_GET['columna']) ) {
+        header('HTTP/1.1 308 Permanent Redirect');
+    }
+}
 
+procesaredirect();
 $personaje=getPersonaje();
 $tablero = cargarCSV("../../data/tabla.csv");
 $arrowsData=cargarCSV("../../data/arrows.csv");
@@ -175,7 +177,7 @@ $mensajesMarkup = getMensajesMarkup($mensajes);
         ?>
     </div>
      <div class="arrows">
-     <?php echo $arrowsMarkup ?>
+        <?php echo $arrowsMarkup ?>
      </div>
 </body>
 </html>
