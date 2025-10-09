@@ -70,12 +70,12 @@ $arrowsMarkup = getArrowsMarkup($arrows);
 </head>
 <body>
     <h1>Tablero juego super rol DWES</h1>
-    <div class="arrowsContainer">
-        <?php echo $arrowsMarkup; ?>
-    </div>
     <div class="mensajesContainer"><?php echo $mensajesUsuarioMarkup; ?></div>
     <div class="contenedorTablero">
         <?php echo $tableroMarkup; ?>
+    </div>
+    <div class="arrowsContainer">
+        <?php echo $arrowsMarkup; ?>
     </div>
     
 </body>

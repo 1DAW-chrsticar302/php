@@ -69,7 +69,10 @@ function leerInput(){
     return (isset($col) && is_int($col) && isset($row) && is_int($row))? array(
             'row' => $row,
             'col' => $col
-        ) : null;
+        ) : array(
+            'row' => 0,
+            'col' => 0
+        );
 }
 
 function getMensajes(&$posPersonaje){
