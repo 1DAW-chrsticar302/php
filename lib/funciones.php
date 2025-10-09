@@ -13,7 +13,7 @@ function getTableroMarkup ($tablero, $posPersonaje){
     foreach ($tablero as $filaIndex => $datosFila) {
         foreach ($datosFila as $columnaIndex => $tileType) {
             if(isset($posPersonaje)&&($filaIndex == $posPersonaje['row'])&&($columnaIndex == $posPersonaje['col'])){
-                $output .= '<div class = "tile ' . $tileType . '"><img src="./src/super_musculitos.png"></div>';    
+                $output .= '<div class = "tile ' . $tileType . '"><img src="./src/sonicT.png"></div>';    
             }else{
                 $output .= '<div class = "tile ' . $tileType . '"></div>';
             }
