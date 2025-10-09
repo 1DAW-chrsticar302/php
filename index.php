@@ -9,7 +9,6 @@ include('./lib/funciones.php');
 
 $posPersonaje = leerInput();
 $arrows = getArrows($posPersonaje);
-// $posPersonaje=transformPos($posPersonaje,$arrows);
 $tablero = leerArchivoCSV('./data/tablero1.csv');
 $mensajes =  getMensajes($posPersonaje);
 
@@ -67,31 +66,17 @@ $arrowsMarkup = getArrowsMarkup($arrows);
             background-color: green;
             background-position: 0px 0px;
         }
-        .arrows {
-            place-self: center;
-            width:400px;
-            display:grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-        }
     </style>
 </head>
 <body>
     <h1>Tablero juego super rol DWES</h1>
     <div class="arrowsContainer">
-        
+        <?php echo $arrowsMarkup; ?>
     </div>
     <div class="mensajesContainer"><?php echo $mensajesUsuarioMarkup; ?></div>
     <div class="contenedorTablero">
         <?php echo $tableroMarkup; ?>
     </div>
-
-    <div class="arrows">
-        <?php echo $arrowsMarkup; ?>
-    </div>
-
-
-    <a href="formulario.php">formulario</a>
-
+    
 </body>
 </html>

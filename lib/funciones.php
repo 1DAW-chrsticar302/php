@@ -33,32 +33,8 @@ function getArrowsMarkup($arrows){
     
     $output = '';
     if(isset($arrows)){
-        foreach($arrows as $nombreBoton => $arrayPos){
-            if($nombreBoton == "." || $nombreBoton == ",") {
-                $output.='<form  action="<?php echo $_SERVER['.'PHP_SELF'.']; ?>" method="post">';
-                $output.='<div></div>';
-                $output.='</form>';
-            }
-            if($nombreBoton == "arriba") {
-                $output.='<form  action="<?php echo $_SERVER['.'PHP_SELF'.']; ?>" method="post">';
-                $output.='<input type="submit" value="Arriba" name="flecha">';
-                $output.='</form>';
-            }
-            if($nombreBoton == "izquierda") {
-                $output.='<form  action="<?php echo $_SERVER['.'PHP_SELF'.']; ?>" method="post">';
-                $output.='<input type="submit" value="Izquierda" name="flecha">';
-                $output.='</form>';
-            }
-            if($nombreBoton == "abajo") {
-                $output.='<form  action="<?php echo $_SERVER['.'PHP_SELF'.']; ?>" method="post">';
-                $output.='<input type="submit" value="Abajo" name="flecha">';
-                $output.='</form>';
-            }
-            if($nombreBoton == "derecha") {
-                $output.='<form  action="<?php echo $_SERVER['.'PHP_SELF'.']; ?>" method="post">';
-                $output.='<input type="submit" value="Derecha" name="flecha">';
-                $output.='</form>';
-            }
+        foreach($arrows as $sentido => $arrayPos){
+            $output .= '<a href="./index.php?col='.$arrayPos['col'].'&row='.$arrayPos['row'].'">'.$sentido.'</a> ';
         }
     }
     
@@ -87,26 +63,14 @@ function leerArchivoCSV($rutaArchivoCSV) {
 }
 function leerInput(){
     
-        $flecha = filter_input(INPUT_POST, 'flecha', FILTER_VALIDATE_INT);
-        
+    $col = filter_input(INPUT_GET, 'col', FILTER_VALIDATE_INT);
+    $row = filter_input(INPUT_GET, 'row', FILTER_VALIDATE_INT);
 
-    return (isset($flecha))? array(
+    return (isset($col) && is_int($col) && isset($row) && is_int($row))? array(
             'row' => $row,
             'col' => $col
-        ) : array (
-            'row' => 5,
-            'col' => 5,
-        );
+        ) : null;
 }
-
-// function transformPos($posPersonaje,$arrows) {
-//     if(isset($_POST['flecha'])) {
-//         $posPersonaje = $arrows[$_POST];
-//     }
-//     else{
-//         return $posPersonaje;
-//     }
-// }
 
 function getMensajes(&$posPersonaje){
     if(!isset($posPersonaje)){
@@ -119,24 +83,21 @@ function getArrows($posPersonaje){
     if(isset($posPersonaje)){
 
         $arrows = array(
-            '.' => null,
-            
-            'arriba' => array(
-                'row' => $posPersonaje['row'] -1,
-                'col' => $posPersonaje['col'] ,
-            ),
-            ',' => null,
             'izquierda' => array(
                 'row' => $posPersonaje['row'],
                 'col' => $posPersonaje['col'] -1,
             ),
-            'abajo' => array(
-                'row' => $posPersonaje['row'] +1,
-                'col' => $posPersonaje['col'],
+            'arriba' => array(
+                'row' => $posPersonaje['row'] -1,
+                'col' => $posPersonaje['col'] ,
             ),
             'derecha' => array(
                 'row' => $posPersonaje['row'],
                 'col' => $posPersonaje['col'] +1,
+            ),
+            'abajo' => array(
+                'row' => $posPersonaje['row'] +1,
+                'col' => $posPersonaje['col'],
             ),
         );
         return $arrows;
