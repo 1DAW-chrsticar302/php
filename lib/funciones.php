@@ -29,34 +29,36 @@ function getMensajesMarkup($arrayMensajes){
     return $output;
     
 }
-function getArrowsMarkup($arrows){
+function getArrowsMarkup($arrows,$posPersonaje){
     
     $output = '';
     if(isset($arrows)){
         foreach($arrows as $nombreBoton => $arrayPos){
             if($nombreBoton == "." || $nombreBoton == ",") {
-                $output.='<form  action="<?php echo $_SERVER['.'PHP_SELF'.']; ?>" method="post">';
+                $output.='<form  action="<?php echo $_SERVER['."'PHP_SELF'".']; ?>" method="post">';
                 $output.='<div></div>';
                 $output.='</form>';
             }
             if($nombreBoton == "arriba") {
-                $output.='<form  action="<?php echo $_SERVER['.'PHP_SELF'.']; ?>" method="post">';
+                $output.='<form  action="<?php echo $_SERVER['."'PHP_SELF'".']; ?>" method="post">';
                 $output.='<input type="submit" value="Arriba" name="flecha">';
                 $output.='</form>';
             }
             if($nombreBoton == "izquierda") {
-                $output.='<form  action="<?php echo $_SERVER['.'PHP_SELF'.']; ?>" method="post">';
+                $output.='<form  action="<?php echo $_SERVER['."'PHP_SELF'".']; ?>" method="post">';
                 $output.='<input type="submit" value="Izquierda" name="flecha">';
                 $output.='</form>';
             }
             if($nombreBoton == "abajo") {
-                $output.='<form  action="<?php echo $_SERVER['.'PHP_SELF'.']; ?>" method="post">';
+                $output.='<form  action="<?php echo $_SERVER['."'PHP_SELF'".']; ?>" method="post">';
                 $output.='<input type="submit" value="Abajo" name="flecha">';
                 $output.='</form>';
             }
             if($nombreBoton == "derecha") {
-                $output.='<form  action="<?php echo $_SERVER['.'PHP_SELF'.']; ?>" method="post">';
+                $output.='<form  action="<?php echo $_SERVER['."'PHP_SELF'".']; ?>" method="post">';
                 $output.='<input type="submit" value="Derecha" name="flecha">';
+                $output.='<input type="hidden" name="col" value="'.$posPersonaje['col'].'">
+                        <input type="hidden" name="row" value="'.$posPersonaje['row'].'">';
                 $output.='</form>';
             }
         }
@@ -87,12 +89,13 @@ function leerArchivoCSV($rutaArchivoCSV) {
 }
 function leerInput(){
     
-        $flecha = filter_input(INPUT_POST, 'flecha', FILTER_VALIDATE_INT);
+        $row = filter_input(INPUT_POST, 'row', FILTER_DEFAULT);
+        $col = filter_input(INPUT_POST, 'col', FILTER_DEFAULT);
         
 
-    return (isset($flecha))? array(
-            'row' => $row,
-            'col' => $col
+    return (isset($_POST['flecha']))? array(
+            'row' => 0,
+            'col' => 0
         ) : array (
             'row' => 5,
             'col' => 5,

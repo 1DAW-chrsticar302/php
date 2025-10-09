@@ -17,7 +17,7 @@ $mensajes =  getMensajes($posPersonaje);
 //*****+++Lógica de presentación*******
 $tableroMarkup = getTableroMarkup($tablero, $posPersonaje);
 $mensajesUsuarioMarkup = getMensajesMarkup($mensajes);
-$arrowsMarkup = getArrowsMarkup($arrows);
+$arrowsMarkup = getArrowsMarkup($arrows,$posPersonaje);
 
 ?>
 <!DOCTYPE html>
