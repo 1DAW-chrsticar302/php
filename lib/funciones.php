@@ -29,43 +29,22 @@ function getMensajesMarkup($arrayMensajes){
     return $output;
     
 }
-function getArrowsMarkup($arrows,$posPersonaje){
+function getFormMarkup($posPersonaje){
     
-    $output = '';
-    if(isset($arrows)){
-        foreach($arrows as $nombreBoton => $arrayPos){
-            if($nombreBoton == "." || $nombreBoton == ",") {
-                $output.='<form  action="<?php echo $_SERVER['."'PHP_SELF'".']; ?>" method="post">';
-                $output.='<div></div>';
-                $output.='</form>';
-            }
-            if($nombreBoton == "arriba") {
-                $output.='<form  action="<?php echo $_SERVER['."'PHP_SELF'".']; ?>" method="post">';
-                $output.='<input type="submit" value="Arriba" name="flecha">';
-                $output.='</form>';
-            }
-            if($nombreBoton == "izquierda") {
-                $output.='<form  action="<?php echo $_SERVER['."'PHP_SELF'".']; ?>" method="post">';
-                $output.='<input type="submit" value="Izquierda" name="flecha">';
-                $output.='</form>';
-            }
-            if($nombreBoton == "abajo") {
-                $output.='<form  action="<?php echo $_SERVER['."'PHP_SELF'".']; ?>" method="post">';
-                $output.='<input type="submit" value="Abajo" name="flecha">';
-                $output.='</form>';
-            }
-            if($nombreBoton == "derecha") {
-                $output.='<form  action="<?php echo $_SERVER['."'PHP_SELF'".']; ?>" method="post">';
-                $output.='<input type="submit" value="Derecha" name="flecha">';
-                $output.='<input type="hidden" name="col" value="'.$posPersonaje['col'].'">
-                        <input type="hidden" name="row" value="'.$posPersonaje['row'].'">';
-                $output.='</form>';
-            }
-        }
+    $output = '<form action="'.$_SERVER['PHP_SELF'].'" method="post">
+        <input type="submit" name="direccion" value="arriba">
+        <input type="submit" name="direccion" value="izquierda">
+        <input type="submit" name="direccion" value="derecha">
+        <input type="submit" name="direccion" value="abajo">';
+    if(isset($posPersonaje)){
+        $output .= '<input type="hidden" name="pos_personaje" value="'.base64_encode(serialize($posPersonaje)).'">';
+        //$output .= '<input type="hidden" name="col" value="'.$posPersonaje['col'].'">
+        //<input type="hidden" name="row" value="'.$posPersonaje['row'].'">';
     }
+    $output.='</form>';
+    dump(base64_encode(serialize($posPersonaje)));
     
-    return $output;
-    
+    return $output;   
 }
 
 
@@ -87,29 +66,50 @@ function leerArchivoCSV($rutaArchivoCSV) {
 
     return $tablero;
 }
-function leerInput(){
+
+/*function procesaRedirect(){
+    if((!isset($_GET['col']))&&(!isset($_GET['row']))){
+        header("HTTP/1.1 308 Permanent Redirect");
+        header('Location: ./index.php?row=0&col=0');
+    }
+}*/
+
+function procesarInput(){
     
-        $row = filter_input(INPUT_POST, 'row', FILTER_DEFAULT);
-        $col = filter_input(INPUT_POST, 'col', FILTER_DEFAULT);
-        
 
-    return (isset($_POST['flecha']))? array(
+    $posPersonajeAnterior = base64_decode(unserialize(filter_input(INPUT_POST, 'pos_personaje', FILTER_DEFAULT)));
+    //VOY POR AQUÍ
+
+    $col = filter_input(INPUT_POST, 'col', FILTER_VALIDATE_INT);
+    $row = filter_input(INPUT_POST, 'row', FILTER_VALIDATE_INT);
+
+    $direccion = filter_input(INPUT_POST, 'direccion', FILTER_DEFAULT);
+    $posPersonaje= (isset($col) && is_int($col) && isset($row) && is_int($row))? array(
+            'row' => $row,
+            'col' => $col
+        ) : array(
             'row' => 0,
-            'col' => 0
-        ) : array (
-            'row' => 5,
-            'col' => 5,
+            'col' => 0,
         );
+    if(isset($direccion)){
+        switch($direccion){
+            case 'arriba':
+                $posPersonaje['row']--;
+            break;
+            case 'abajo':
+                $posPersonaje['row']++;
+            break;
+            case 'derecha':
+                $posPersonaje['col']++;
+            break;
+            case 'izquierda':
+                $posPersonaje['col']--;
+            break;
+        }
+    }
+    return $posPersonaje;
+    
 }
-
-// function transformPos($posPersonaje,$arrows) {
-//     if(isset($_POST['flecha'])) {
-//         $posPersonaje = $arrows[$_POST];
-//     }
-//     else{
-//         return $posPersonaje;
-//     }
-// }
 
 function getMensajes(&$posPersonaje){
     if(!isset($posPersonaje)){
@@ -118,33 +118,30 @@ function getMensajes(&$posPersonaje){
     return array('');
 }
 
-function getArrows($posPersonaje){
+/*function getArrows($posPersonaje){
     if(isset($posPersonaje)){
 
         $arrows = array(
-            '.' => null,
-            
-            'arriba' => array(
-                'row' => $posPersonaje['row'] -1,
-                'col' => $posPersonaje['col'] ,
-            ),
-            ',' => null,
             'izquierda' => array(
                 'row' => $posPersonaje['row'],
                 'col' => $posPersonaje['col'] -1,
             ),
-            'abajo' => array(
-                'row' => $posPersonaje['row'] +1,
-                'col' => $posPersonaje['col'],
+            'arriba' => array(
+                'row' => $posPersonaje['row'] -1,
+                'col' => $posPersonaje['col'] ,
             ),
             'derecha' => array(
                 'row' => $posPersonaje['row'],
                 'col' => $posPersonaje['col'] +1,
+            ),
+            'abajo' => array(
+                'row' => $posPersonaje['row'] +1,
+                'col' => $posPersonaje['col'],
             ),
         );
         return $arrows;
     }
     return null;
 
-}
+}*/
 
